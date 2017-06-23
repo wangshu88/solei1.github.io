@@ -53,8 +53,8 @@ gems:
 navbar:
   - slug : about
     title: About
-  - slug : friends
-    title: Friends
+  - slug : links
+    title: Links
   - slug : blog
     title: Blog
 
