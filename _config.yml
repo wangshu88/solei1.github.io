@@ -2,7 +2,7 @@
 # SEO settings
 title: "solei"
 title2: "1" # default: ""
-description: "给我光明的欺骗，让我一直都向前"
+# description: "给我光明的欺骗，让我一直都向前"
 # keywords: "Jekyll, theme, free, download, SEO, blog, web, minimalist, thinkspace"
 url: https://solei1.github.io # site url
 baseurl: "" # apply repo name if use it under gh-pages branch
