@@ -6,11 +6,7 @@ permalink: /links/
 
 
 
-
-
-友链 :*
-
-
+*友链 :*
 
 - [qux-bbb](http://qux-bbb.github.io/)
 
