@@ -1,4 +1,16 @@
-## links:
+---
+layout: page
+title: Links
+permalink: /links/
+---
+
+
+
+
+
+友链 :*
+
+
 
 - [qux-bbb](http://qux-bbb.github.io/)
 
@@ -9,19 +21,22 @@
   ​
 
 
-
-## 电影：
+*电影 :*
 
 - apocalypto
 - 拯救大兵瑞恩
 
 
 
-## 美剧ing:
+
+*美剧 :*
 
 - 双峰
 - 美国众神
 - 超感猎杀
 - 权力的游戏
 - 黑客军团
+- 绝命毒师
+- 大西洋帝国
+
 
