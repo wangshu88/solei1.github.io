@@ -17,12 +17,6 @@ permalink: /links/
   ​
 
 
-*电影 :*
-
-- apocalypto
-- 拯救大兵瑞恩
-
-
 
 
 *美剧 :*
@@ -36,3 +30,9 @@ permalink: /links/
 - 大西洋帝国
 
 
+
+
+*其他：*
+
+- XMAN-PWN
+- 《ida pro 权威指南》
