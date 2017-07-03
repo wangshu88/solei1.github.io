@@ -253,7 +253,9 @@ _64位环境下 :_
 
 
 
-##　实例
+## 实例
+
+
 
 _x86 32位环境 :_
 
@@ -419,10 +421,10 @@ p.interact(0)
 
 
 
-http://rk700.github.io/2015/08/09/return-to-dl-resolve/
+[http://rk700.github.io/2015/08/09/return-to-dl-resolve/](http://rk700.github.io/2015/08/09/return-to-dl-resolve/)
 
-http://www.inforsec.org/wp/?p=389
+[http://www.inforsec.org/wp/?p=389](http://www.inforsec.org/wp/?p=389)
 
-http://fanrong1992.github.io/2016/11/09/Return-to-dl-resolve/
+[http://fanrong1992.github.io/2016/11/09/Return-to-dl-resolve/](http://fanrong1992.github.io/2016/11/09/Return-to-dl-resolve/)
 
-http://blog.csdn.net/guiguzi5512407/article/details/52752914
+[http://blog.csdn.net/guiguzi5512407/article/details/52752914](http://blog.csdn.net/guiguzi5512407/article/details/52752914)
