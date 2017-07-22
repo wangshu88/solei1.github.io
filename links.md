@@ -22,8 +22,6 @@ permalink: /links/
 *美剧 :*
 
 - The Mist (迷雾)
-
-
 - Twin Peaks (双峰)
 - American Gods (美国众神)
 - Sense 8 (超感猎杀)
@@ -36,5 +34,7 @@ permalink: /links/
 
 
 *其他：*
-
+- 局域网信息嗅探,中间人攻击
+- 渗透工具整合
+- 绵羊墙
 - 《ida pro 权威指南》
