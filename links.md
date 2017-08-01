@@ -21,14 +21,15 @@ permalink: /links/
 
 *美剧 :*
 
-- The Mist (迷雾)
-- Twin Peaks (双峰)
-- American Gods (美国众神)
-- Sense 8 (超感猎杀)
-- Game of Thrones (权力的游戏)
-- Mr.Robot (黑客军团)
-- Breaking bad (绝命毒师)
-- Boardwalk Empire (大西洋帝国)
+- The Mist (迷雾) ing
+- Twin Peaks (双峰) ing
+- Game of Thrones (权力的游戏) ing
+- Mr.Robot (黑客军团) 10月
+- American Gods (美国众神) 2018
+- Westworld (西部世界) 2018
+- Sense 8 (超感猎杀) 被砍
+- Breaking bad (绝命毒师) 
+- Boardwalk Empire (大西洋帝国) 
 
 
 
