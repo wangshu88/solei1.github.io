@@ -9,10 +9,9 @@ permalink: /links/
 *友链 :*
 
 - [qux-bbb](http://qux-bbb.github.io/)
-
 - [ToAlice](https://toalice.github.io/)
-
 - [GateofBabylon](http://45.77.13.75:1234/)
+- [ccmr](http://www.cnblogs.com/ccmr)
 
   ​
 
@@ -24,6 +23,7 @@ permalink: /links/
 - The Mist (迷雾) ing
 - Twin Peaks (双峰) ing
 - Game of Thrones (权力的游戏) ing
+- The Walking Dead (行尸走肉) 10月
 - Mr.Robot (黑客军团) 10月
 - American Gods (美国众神) 2018
 - Westworld (西部世界) 2018
