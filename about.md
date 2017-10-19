@@ -15,6 +15,7 @@ CTF入门，安全爱好，Linux粉，美剧狂
 
 
 - This Is Us (我们这一天)  ing
+- True Detective (真探) ing
 - The Mist (迷雾) 第一季完结
 - The Walking Dead (行尸走肉) 10月
 - Mr.Robot (黑客军团) 10月
@@ -23,6 +24,7 @@ CTF入门，安全爱好，Linux粉，美剧狂
 - Fargo (冰血暴)  第四季未知
 - Game of Thrones (权力的游戏)  2019?
 - Sense 8 (超感猎杀) 复活 2018
+- Big Little Lies (大小谎言) 
 - Twin Peaks (双峰) 
 - Breaking bad (绝命毒师)
 - Boardwalk Empire (大西洋帝国)
