@@ -16,11 +16,11 @@ CTF入门，安全爱好，Linux粉，美剧狂
 
 - This Is Us (我们这一天)  ing
 - The Walking Dead (行尸走肉) ing
-- MindHunter (心灵猎人) ing
+- Mr.Robot (黑客军团) ing
+- MindHunter (心灵猎人)
 - Stranger Things (怪奇物语)
 - True Detective (真探) 
 - The Mist (迷雾) 第一季完结
-- Mr.Robot (黑客军团) 10月
 - American Gods (美国众神) 2018
 - Westworld (西部世界) 2018
 - Fargo (冰血暴)  第四季未知
