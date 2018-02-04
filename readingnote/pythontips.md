@@ -157,3 +157,59 @@ def open_file(name):
 # 这个GeneratorContextManager被赋值给open_file函数，我们实际上是在调用GeneratorContextManager对象。
 ```
 
+
+
+## 字符串的优化
+
+python 中的字符串对象是不可改变的，因此对任何字符串的操作如拼接，修改等都将产生一个新的字符串对象，而不是基于原字符串，因此这种持续的 copy 会在一定程度上影响 python 的性能。
+
+优化主要有下面几个方法:
+
+- 在字符串连接的使用尽量使用 join() 而不是 +
+
+  ```python
+  # 不推荐
+  s = ""
+  for x in list: 
+     s += func(x)
+
+  #推荐
+  slist = [func(elt) for elt in somelist] 
+  s = "".join(slist)
+  ```
+
+  ​
+
+- 当对字符串可以使用正则表达式或者内置函数来处理的时候，选择内置函数。如 str.isalpha()，str.isdigit()，str.startswith(('x', 'yz'))，str.endswith(('x', 'yz'))
+
+- 对字符进行格式化比直接串联读取要快
+
+  ```python
+  #推荐
+  out = "<html>%s%s%s%s</html>" % (head, prologue, query, tail)
+
+  # 不推荐
+  out = "<html>" + head + prologue + query + tail + "</html>"
+  ```
+
+  ​
+  
+## 简单情况下的并行处理
+
+
+```python
+from urllib import request
+from multiprocessing.dummy import Pool as ThreadPool
+
+urls = ['http://www.baidu.com', 'http://www.yahoo.com', 'http://www.reddit.com', 'http://lcamtuf.coredump.cx/afl/',  'http://www.python.org', 'http://www.python.org/about/', 'http://planet.python.org/', 'https://wiki.python.org/','http://www.python.org/doc/']
+
+pool = ThreadPool(8)
+
+results = pool.map(request.urlopen, urls)
+
+for i in results:
+    print(i.status)
+
+pool.close()
+pool.join()
+```
