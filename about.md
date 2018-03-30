@@ -14,9 +14,10 @@ CTF入门，安全爱好，Linux粉，美剧狂
 
 
 
-- This Is Us (我们这一天)  ing
-- The Walking Dead (行尸走肉) ing
-- Mr.Robot (黑客军团) ing
+- This Is Us (我们这一天)  
+- The Walking Dead (行尸走肉) 
+- Counterpart (相对宇宙)
+- Mr.Robot (黑客军团) 
 - MindHunter (心灵猎人)
 - Stranger Things (怪奇物语)
 - True Detective (真探) 
@@ -31,16 +32,3 @@ CTF入门，安全爱好，Linux粉，美剧狂
 - Breaking bad (绝命毒师)
 - Boardwalk Empire (大西洋帝国)
 - [阴阳魔界](http://www.acfun.cn/v/ac2038557)
-
-
-
-
-*听歌* :
-
-- Everglow
-- Fool's Day
-- Into The Fire
-- Comfortably Numb
-- Whatever
-- [荆棘树](http://www.ximalaya.com/33493231/sound/10065384/)
-- ......
